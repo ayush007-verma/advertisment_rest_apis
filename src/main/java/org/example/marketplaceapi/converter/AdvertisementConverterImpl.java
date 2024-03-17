@@ -24,8 +24,9 @@ public class AdvertisementConverterImpl implements  AdvertisementConverter {
         advertismentDTOView.setDescription(advertisment.getDescription());
         advertismentDTOView.setExpirationDate(advertisment.getExpirationDate());
         advertismentDTOView.setPublicationDate(advertisment.getPublicationDate());
-//        advertismentDTOView.setEmail(advertisment.getUser().getEmail());
-
+        if (advertisment != null && advertisment.getUser() != null ) {
+            advertismentDTOView.setEmail(advertisment.getUser().getEmail());
+        }
         return advertismentDTOView;
     }
 }
