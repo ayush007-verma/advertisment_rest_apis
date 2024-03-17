@@ -12,8 +12,6 @@ import lombok.*;
 
 public class UserDTOView {
 
-    private Long id;
     private String username;
     private String email;
-
 }
