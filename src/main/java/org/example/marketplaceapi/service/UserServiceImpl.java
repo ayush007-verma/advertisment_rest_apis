@@ -33,14 +33,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTOView loginSignupUser(UserDTOForm userDTOForm) {
+    public UserDTOView loginUser(UserDTOForm userDTOForm) {
+        if (userDTOForm == null) throw new IllegalArgumentException("User form is null");
+        //check if email already exists
+        boolean isExistEmail = userRepository.existsByEmail(userDTOForm.getEmail());
+        if (!isExistEmail) {
+            return null;
+        }
+        User existingUser = userRepository.findByEmail(userDTOForm.getEmail()).get();
+        return userConverter.UserToUserDTOView(existingUser);
+    }
+
+        @Override
+    public UserDTOView signupUser(UserDTOForm userDTOForm) {
         //check params
         if (userDTOForm == null) throw new IllegalArgumentException("User form is null");
         //check if email already exists
         boolean isExistEmail = userRepository.existsByEmail(userDTOForm.getEmail());
         if (isExistEmail) {
-            User existingUser = userRepository.findByEmail(userDTOForm.getEmail()).get();
-            return userConverter.UserToUserDTOView(existingUser);
+            throw new RuntimeException("User already exists. Please login");
         }
 
         //Hash password
