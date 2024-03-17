@@ -3,7 +3,9 @@ package org.example.marketplaceapi.converter;
 import org.example.marketplaceapi.model.Entity.User;
 import org.example.marketplaceapi.model.dto.UserDTOForm;
 import org.example.marketplaceapi.model.dto.UserDTOView;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserConverterImpl implements UserConverter {
     @Override
     public UserDTOView UserToUserDTOView(User user) {
@@ -30,6 +32,6 @@ public class UserConverterImpl implements UserConverter {
         User user = new User();
         user.setUserName(userDTOForm.getUsername());
         user.setEmail(userDTOForm.getEmail());
-        return null;
+        return user;
     }
 }

@@ -3,6 +3,8 @@ package org.example.marketplaceapi.model.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -10,7 +12,7 @@ import lombok.*;
 @Builder
 
 
-public class UserDTOForm {
+public class UserDTOForm implements Serializable {
 
     private String username;
     private String email;

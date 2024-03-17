@@ -4,8 +4,9 @@ import org.example.marketplaceapi.model.Entity.User;
 import org.example.marketplaceapi.model.dto.UserDTOForm;
 import org.example.marketplaceapi.model.dto.UserDTOView;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+
 public interface UserConverter {
     UserDTOView UserToUserDTOView(User entity);
 

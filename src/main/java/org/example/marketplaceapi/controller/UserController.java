@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/auth/")
+@RequestMapping(value = "/api/auth")
 @Controller
 public class UserController {
 
@@ -22,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTOView> loginUser(UserDTOForm userDTOForm) {
+    public ResponseEntity<UserDTOView> loginUser(@RequestBody UserDTOForm userDTOForm) {
         UserDTOView loggedInUser = userService.loginUser(userDTOForm);
         if (loggedInUser == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -30,8 +28,8 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
-    public UserDTOView signupUser(UserDTOForm userDTOForm) {
+    @PostMapping(value = "/signup")
+    public UserDTOView signupUser(@RequestBody UserDTOForm userDTOForm) {
         UserDTOView signedUpUser = userService.signupUser(userDTOForm);
         return signedUpUser;
     }

@@ -10,26 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Autowired
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserConverter userConverter;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserConverter userConverter;
-
-    @Autowired
-
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserConverter userConverter) {
         this.userRepository = userRepository;
+        this.userConverter = userConverter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -56,7 +48,11 @@ public class UserServiceImpl implements UserService {
 
         //Hash password
         User newUser = userConverter.UserDTOFormToUser(userDTOForm);
-        newUser.setPassword(passwordEncoder.encode(userDTOForm.getPassword()));
+        String encodedPassword = passwordEncoder.encode(userDTOForm.getPassword());
+        if (encodedPassword == null) {
+            throw new RuntimeException("Password Encryption failed...");
+        }
+        newUser.setPassword(encodedPassword);
 
         //Create a new user entity and save it to database
         User saveUser = userRepository.save(newUser);
