@@ -1,4 +1,4 @@
-package org.example.marketplaceapi.Entity;
+package org.example.marketplaceapi.model.Entity;
 
 
 import jakarta.persistence.*;
@@ -26,11 +26,11 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String UserName;
+    private String userName;
 
 
     @Column(nullable = false)
-    private String Password;
+    private String password;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL) // using a casecade here first add the detail data then fetch with user.
     private List<Advertisment> advertisments;

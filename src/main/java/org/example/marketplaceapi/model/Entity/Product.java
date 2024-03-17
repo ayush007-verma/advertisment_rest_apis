@@ -1,4 +1,4 @@
-package org.example.marketplaceapi.Entity;
+package org.example.marketplaceapi.model.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,4 +32,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="Advertisment_id")
     private Advertisment advertisment;
+
+
 }
