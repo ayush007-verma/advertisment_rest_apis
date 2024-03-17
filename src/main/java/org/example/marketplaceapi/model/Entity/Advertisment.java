@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Advertisment {
 
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -34,14 +34,19 @@ public class Advertisment {
     @Column(nullable = false)
     private LocalDate expirationDate;
 
-    @ManyToOne@JoinColumn(name="user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "advertisment",cascade = CascadeType.ALL) // using a Casecade here first add the detail data then fetch with Advertisment..
+    @OneToMany(mappedBy = "advertisment", cascade = CascadeType.ALL)
+    // using a Casecade here first add the detail data then fetch with Advertisment..
     private List<Product> products;
 
-
-
-
+    @PrePersist
+    public void prePersist() {
+        if (publicationDate == null) {
+          publicationDate = LocalDate.now();
+        }
+    }
 
 }
