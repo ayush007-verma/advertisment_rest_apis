@@ -20,18 +20,21 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTOView> loginUser(@RequestBody UserDTOForm userDTOForm) {
+    public ResponseEntity<String> loginUser(@RequestBody UserDTOForm userDTOForm) {
         UserDTOView loggedInUser = userService.loginUser(userDTOForm);
         if (loggedInUser == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("Successfully logged in as " + loggedInUser.getUsername(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/signup")
-    public UserDTOView signupUser(@RequestBody UserDTOForm userDTOForm) {
+    public ResponseEntity<String> signupUser(@RequestBody UserDTOForm userDTOForm) {
         UserDTOView signedUpUser = userService.signupUser(userDTOForm);
-        return signedUpUser;
+        if (signedUpUser == null) {
+            return new ResponseEntity<>("User already exists", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Successfully registered new user as " + signedUpUser.getUsername(), HttpStatus.OK);
     }
 
 }

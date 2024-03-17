@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         //check if email already exists
         boolean isExistEmail = userRepository.existsByEmail(userDTOForm.getEmail());
         if (isExistEmail) {
-            throw new RuntimeException("User already exists. Please login");
+            return null;
         }
 
         //Hash password
